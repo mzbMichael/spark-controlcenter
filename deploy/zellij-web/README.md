@@ -26,7 +26,7 @@ Clone this fork on the DGX Spark and run the script **without** `sudo`:
 
 ```bash
 git clone https://github.com/mzbMichael/spark-controlcenter.git
-cd spark-dashboard
+cd spark-controlcenter
 ./deploy/zellij-web/install.sh
 ```
 
