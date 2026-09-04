@@ -1,0 +1,16 @@
+web_server_ip "127.0.0.1"
+web_server_port 8082
+
+web_client {
+    base_url "/zellij"
+    cursor_blink true
+    cursor_style "block"
+    cursor_inactive_style "outline"
+    theme {
+        background 8 8 10
+        foreground 228 228 231
+        bright_green 118 185 0
+        cursor 118 185 0
+        selection_background 39 39 42
+    }
+}

@@ -1,0 +1,22 @@
+[Unit]
+Description=Zellij Web terminal for %i
+Documentation=https://zellij.dev/documentation/web-client.html
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=%i
+EnvironmentFile=/etc/spark-dashboard/zellij-web-%i.env
+ExecStart=/usr/local/bin/zellij web --ip 127.0.0.1 --port 8082
+Restart=on-failure
+RestartSec=3
+
+# Browser disconnects never end a session. KillMode=process also prevents a
+# web-service restart from terminating the independent Zellij session servers.
+KillMode=process
+TimeoutStopSec=10
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

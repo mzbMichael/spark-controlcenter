@@ -171,3 +171,58 @@
 
 /* Gauge glow filter — reused by ArcGauge */
 .gauge-glow { filter: drop-shadow(0 0 4px var(--glow-color, #76B900)); }
+
+/* Responsive dashboard/Zellij split. Pixel sizes are operator-configurable and
+   subsequently persisted per orientation by TerminalWorkspace. */
+.terminal-workspace {
+  display: flex;
+  width: 100vw;
+  height: 100dvh;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #08080a;
+}
+.terminal-workspace--desktop { flex-direction: row; }
+.terminal-workspace--mobile { flex-direction: column; }
+.terminal-dashboard { flex: 1 1 auto; min-width: 0; min-height: 0; }
+.terminal-dashboard > * { width: 100%; height: 100%; }
+.terminal-panel {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #0c0c0f;
+}
+.terminal-workspace--desktop .terminal-panel { flex-direction: column; }
+.terminal-workspace--mobile .terminal-panel { flex-direction: column; }
+.terminal-divider {
+  z-index: 20;
+  flex: 0 0 7px;
+  touch-action: none;
+  background: #18181b;
+  transition: background-color 120ms ease;
+}
+.terminal-divider:hover,
+.terminal-divider:active { background: #76b900; }
+.terminal-workspace--desktop .terminal-divider { cursor: col-resize; border-left: 1px solid #27272a; }
+.terminal-workspace--mobile .terminal-divider { cursor: row-resize; border-top: 1px solid #27272a; }
+.terminal-panel__header {
+  height: 32px;
+  flex: 0 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  border-bottom: 1px solid #27272a;
+  color: #a1a1aa;
+  font: 600 11px/1 Inter, sans-serif;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.terminal-panel__title,
+.terminal-panel__external { display: inline-flex; align-items: center; gap: 6px; }
+.terminal-panel__external { color: #71717a; text-decoration: none; }
+.terminal-panel__external:hover { color: #76b900; }
+.terminal-panel__frame { flex: 1 1 auto; width: 100%; min-height: 0; border: 0; background: #0c0c0f; }

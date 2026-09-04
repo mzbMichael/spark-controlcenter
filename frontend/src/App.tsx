@@ -7,6 +7,7 @@ import { LogStreamProvider } from './hooks/LogStreamProvider'
 import { MetricsStoreProvider } from './hooks/MetricsStoreProvider'
 import { AppHeader } from './components/AppHeader'
 import { ConfigurationNotices } from './components/ConfigurationNotices'
+import { TerminalWorkspace } from './components/TerminalWorkspace'
 import { GridPageEditor } from './components/grid/GridPageEditor'
 import { PageBar } from './components/pages/PageBar'
 import { withPagePanels } from './lib/dashboard/editing'
@@ -137,11 +138,13 @@ function App() {
   const route = useRoute()
 
   return (
-    <MetricsStoreProvider>
-      <LogStreamProvider>
-        <DashboardPageView pageId={route.kind === 'page' ? route.pageId : null} />
-      </LogStreamProvider>
-    </MetricsStoreProvider>
+    <TerminalWorkspace>
+      <MetricsStoreProvider>
+        <LogStreamProvider>
+          <DashboardPageView pageId={route.kind === 'page' ? route.pageId : null} />
+        </LogStreamProvider>
+      </MetricsStoreProvider>
+    </TerminalWorkspace>
   )
 }
 
