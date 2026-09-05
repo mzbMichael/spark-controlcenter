@@ -127,6 +127,27 @@ The Zellij path is coupled to `web_client { base_url "/zellij" }` in
 `zellij-config.kdl` and the `/zellij/` nginx location. Change all three when
 using another base path.
 
+## Existing Docker dashboard on port 3000
+
+The host deployment expects its dashboard backend on `127.0.0.1:3000`. An
+older Docker deployment publishing host port 3000 prevents the systemd service
+from starting and causes nginx to serve the old container instead. Identify it
+without deleting it:
+
+```bash
+sudo docker ps --filter publish=3000 --format 'table {{.ID}}\t{{.Names}}\t{{.Ports}}'
+```
+
+Stop the identified old dashboard container, then restart the host service:
+
+```bash
+sudo docker stop CONTAINER_NAME
+sudo systemctl restart spark-dashboard nginx
+```
+
+If Docker Compose manages it, disable or remove that service in its Compose
+project as well so it does not reclaim port 3000 after a reboot.
+
 ## Service operations
 
 ```bash
