@@ -106,13 +106,19 @@ echo "==> Installing Zellij ${ZELLIJ_VERSION} for ${ZELLIJ_TARGET}"
 TEMP_DIR="$(mktemp -d)"
 trap 'rm -rf -- "$TEMP_DIR"' EXIT
 ASSET="zellij-${ZELLIJ_TARGET}.tar.gz"
+CHECKSUM_ASSET="zellij-${ZELLIJ_TARGET}.sha256sum"
 RELEASE_BASE="https://github.com/zellij-org/zellij/releases/download/v${ZELLIJ_VERSION}"
 curl --fail --location --proto '=https' --tlsv1.2 "${RELEASE_BASE}/${ASSET}" -o "${TEMP_DIR}/${ASSET}"
-curl --fail --location --proto '=https' --tlsv1.2 "${RELEASE_BASE}/${ASSET}.sha256sum" -o "${TEMP_DIR}/${ASSET}.sha256sum"
+curl --fail --location --proto '=https' --tlsv1.2 "${RELEASE_BASE}/${CHECKSUM_ASSET}" -o "${TEMP_DIR}/${CHECKSUM_ASSET}"
 (
     cd "$TEMP_DIR"
-    sha256sum --check "${ASSET}.sha256sum"
-    tar -xzf "$ASSET" zellij
+    tar --no-same-owner -xzf "$ASSET" zellij
+    EXPECTED_SHA256="$(awk 'NF { print $1; exit }' "$CHECKSUM_ASSET")"
+    if [[ ! "$EXPECTED_SHA256" =~ ^[[:xdigit:]]{64}$ ]]; then
+        echo "error: invalid checksum in ${CHECKSUM_ASSET}" >&2
+        exit 1
+    fi
+    printf '%s  zellij\n' "$EXPECTED_SHA256" | sha256sum --check -
 )
 sudo install -m 0755 "${TEMP_DIR}/zellij" /usr/local/bin/zellij
 
