@@ -87,6 +87,61 @@ ssh -N -L 8308:127.0.0.1:3080 USER@DGX_HOST
 
 and open <http://127.0.0.1:8308>.
 
+## Launch with NVIDIA Sync
+
+[NVIDIA Sync custom applications](https://docs.nvidia.com/sync/latest/applications.html)
+can own the SSH port forward and open the dashboard with one click. Add a
+custom application for the connected DGX Spark under **Settings > Custom** with
+these values:
+
+| Field | Value |
+| --- | --- |
+| Name | `Spark Control Center` |
+| Port | `3080` |
+| Auto open in browser | Enabled |
+| URL path | Empty (opens `/`) |
+| Launch in Terminal | Disabled |
+
+Use this launch script (NVIDIA Sync invokes it with Bash, so no shebang is
+required):
+
+```bash
+set -e
+
+systemctl is-active --quiet spark-dashboard || {
+    echo "spark-dashboard is not running" >&2
+    exit 1
+}
+
+systemctl is-active --quiet "zellij-web@$USER" || {
+    echo "zellij-web@$USER is not running" >&2
+    exit 1
+}
+
+curl -fsS http://127.0.0.1:3080/ >/dev/null || {
+    echo "Spark Control Center is not reachable on port 3080" >&2
+    exit 1
+}
+
+echo "Spark Control Center is ready"
+
+while true; do
+    sleep 3600
+done
+```
+
+The loop keeps the custom application and its port forward active; it does not
+run or supervise the dashboard or Zellij. Both services are already enabled at
+boot by the installer. Stop any manually created local forwarding of port 3080
+before launching the custom application, otherwise NVIDIA Sync reports a local
+port conflict.
+
+Starting and stopping this custom application repeatedly is safe. Stopping it
+ends only the forwarding connection and the waiting script. It does not stop
+`spark-dashboard`, `zellij-web@USER`, the named `spark-dashboard` Zellij
+session, or programs running inside that session. Only one instance can be
+active on a workstation at a time because it owns local port 3080.
+
 ## Session lifetime
 
 The URL `/zellij/spark-dashboard` creates or attaches to the named
