@@ -1,0 +1,38 @@
+web_server_ip "127.0.0.1"
+web_server_port 8082
+
+web_client {
+    base_url "/zellij"
+    cursor_blink true
+    cursor_style "block"
+    cursor_inactive_style "outline"
+    theme {
+        background 8 8 10
+        foreground 228 228 231
+        bright_green 118 185 0
+        cursor 118 185 0
+        selection_background 39 39 42
+    }
+}
+
+// Browser-friendly mode selectors. Ctrl-based shortcuts remain available in
+// non-normal modes, while normal terminal input can use Ctrl combinations
+// without Zellij intercepting them.
+keybinds {
+    normal clear-defaults=true {
+        bind "Alt Shift p" { SwitchToMode "pane"; }
+        bind "Alt Shift t" { SwitchToMode "tab"; }
+        bind "Alt Shift r" { SwitchToMode "resize"; }
+        bind "Alt Shift s" { SwitchToMode "scroll"; }
+        bind "Alt Shift o" { SwitchToMode "session"; }
+        bind "Alt Shift g" { SwitchToMode "locked"; }
+        bind "Alt Shift n" { NewPane; }
+        bind "Alt Shift h" { MoveFocusOrTab "Left"; }
+        bind "Alt Shift l" { MoveFocusOrTab "Right"; }
+        bind "Alt Shift j" { MoveFocus "Down"; }
+        bind "Alt Shift k" { MoveFocus "Up"; }
+    }
+    locked {
+        bind "Alt Shift g" { SwitchToMode "normal"; }
+    }
+}

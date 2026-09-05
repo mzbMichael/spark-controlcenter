@@ -12,6 +12,13 @@ vLLM engine statistics and streams them over WebSocket to a React frontend.
 
 ## Quick Start
 
+### Dashboard with embedded Zellij Web terminal
+
+For the NVIDIA DGX Spark deployment with a responsive, resizable terminal
+panel, loopback-only reverse proxy, systemd services and SSH tunneling, see
+[`deploy/zellij-web/README.md`](./deploy/zellij-web/README.md). Zellij sessions
+remain attached to the host when the browser or SSH connection closes.
+
 ### Install on your Linux host
 
 Run as your normal user on any Linux host with NVIDIA drivers (requires Rust 1.95+):
