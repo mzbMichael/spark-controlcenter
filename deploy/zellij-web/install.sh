@@ -133,7 +133,8 @@ sudo install -d -o "$TERMINAL_USER" -g "$(id -gn "$TERMINAL_USER")" -m 0700 \
 sudo install -o "$TERMINAL_USER" -g "$(id -gn "$TERMINAL_USER")" -m 0600 \
     "${PROJECT_ROOT}/deploy/zellij-web/zellij-config.kdl" \
     "${TERMINAL_HOME}/.config/zellij-spark-dashboard/config.kdl"
-printf 'ZELLIJ_CONFIG_DIR=%s/.config/zellij-spark-dashboard\n' "$TERMINAL_HOME" | \
+printf 'ZELLIJ_CONFIG_DIR=%s/.config/zellij-spark-dashboard\nZELLIJ_CONFIG_FILE=%s/.config/zellij-spark-dashboard/config.kdl\n' \
+    "$TERMINAL_HOME" "$TERMINAL_HOME" | \
     sudo tee "/etc/spark-dashboard/zellij-web-${TERMINAL_USER}.env" >/dev/null
 sudo chmod 0644 "/etc/spark-dashboard/zellij-web-${TERMINAL_USER}.env"
 sudo install -m 0644 "${PROJECT_ROOT}/deploy/zellij-web/systemd/zellij-web@.service" \
