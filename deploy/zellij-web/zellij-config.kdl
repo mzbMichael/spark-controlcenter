@@ -20,21 +20,19 @@ web_client {
 // without Zellij intercepting them.
 keybinds {
     normal clear-defaults=true {
-        bind "Alt p" { SwitchToMode "pane"; }
-        bind "Alt t" { SwitchToMode "tab"; }
-        bind "Alt r" { SwitchToMode "resize"; }
-        bind "Alt s" { SwitchToMode "scroll"; }
-        bind "Alt o" { SwitchToMode "session"; }
-        bind "Alt g" { SwitchToMode "locked"; }
-        bind "Alt n" { NewPane; }
-        bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
-        bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
-        bind "Alt j" "Alt Down" { MoveFocus "Down"; }
-        bind "Alt k" "Alt Up" { MoveFocus "Up"; }
-        bind "Alt +" "Alt =" { Resize "Increase"; }
-        bind "Alt -" { Resize "Decrease"; }
+        bind "Alt Shift p" { SwitchToMode "pane"; }
+        bind "Alt Shift t" { SwitchToMode "tab"; }
+        bind "Alt Shift r" { SwitchToMode "resize"; }
+        bind "Alt Shift s" { SwitchToMode "scroll"; }
+        bind "Alt Shift o" { SwitchToMode "session"; }
+        bind "Alt Shift g" { SwitchToMode "locked"; }
+        bind "Alt Shift n" { NewPane; }
+        bind "Alt Shift h" { MoveFocusOrTab "Left"; }
+        bind "Alt Shift l" { MoveFocusOrTab "Right"; }
+        bind "Alt Shift j" { MoveFocus "Down"; }
+        bind "Alt Shift k" { MoveFocus "Up"; }
     }
     locked {
-        bind "Alt g" { SwitchToMode "normal"; }
+        bind "Alt Shift g" { SwitchToMode "normal"; }
     }
 }
