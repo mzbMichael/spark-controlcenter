@@ -14,3 +14,27 @@ web_client {
         selection_background 39 39 42
     }
 }
+
+// Browser-friendly mode selectors. Ctrl-based shortcuts remain available in
+// non-normal modes, while normal terminal input can use Ctrl combinations
+// without Zellij intercepting them.
+keybinds {
+    normal clear-defaults=true {
+        bind "Alt p" { SwitchToMode "pane"; }
+        bind "Alt t" { SwitchToMode "tab"; }
+        bind "Alt r" { SwitchToMode "resize"; }
+        bind "Alt s" { SwitchToMode "scroll"; }
+        bind "Alt o" { SwitchToMode "session"; }
+        bind "Alt g" { SwitchToMode "locked"; }
+        bind "Alt n" { NewPane; }
+        bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
+        bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
+        bind "Alt j" "Alt Down" { MoveFocus "Down"; }
+        bind "Alt k" "Alt Up" { MoveFocus "Up"; }
+        bind "Alt +" "Alt =" { Resize "Increase"; }
+        bind "Alt -" { Resize "Decrease"; }
+    }
+    locked {
+        bind "Alt g" { SwitchToMode "normal"; }
+    }
+}
